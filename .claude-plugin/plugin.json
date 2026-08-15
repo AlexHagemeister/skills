@@ -1,0 +1,7 @@
+{
+  "name": "ah",
+  "description": "Agent skills Alex Hagemeister uses every day: moot, align, yes-and, orchestrator. Installs all of them, and new ones as they land.",
+  "author": { "name": "Alex Hagemeister" },
+  "homepage": "https://github.com/AlexHagemeister/skills",
+  "license": "MIT"
+}

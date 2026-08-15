@@ -17,9 +17,18 @@ The [GNADD](https://github.com/AlexHagemeister/gnadd) suite (git-native agent-dr
 
 ## Install
 
-Pick whichever fits how you work. All three end the same way: a folder in your agent's skills directory.
+Pick whichever fits how you work. Every path ends the same way: a folder in your agent's skills directory.
 
-**With the skills CLI** (needs Node for `npx`). Installs one skill, globally, for the agent you name:
+**Claude Code plugin.** The repo is also a plugin marketplace. One plugin, `ah`, holds every skill here, and it picks up new ones as they land. Inside Claude Code:
+
+```
+/plugin marketplace add AlexHagemeister/skills
+/plugin install ah@alexhagemeister
+```
+
+Skills then answer to `/ah:moot`, `/ah:align`, and so on. To get updates without doing anything, open `/plugin`, go to Marketplaces, pick `alexhagemeister`, and turn on auto-update. It is off by default for every marketplace that is not Anthropic's own. In the desktop app the same controls live in the plugin browser.
+
+**With the skills CLI** (needs Node for `npx`). Works with any agent the CLI supports. Installs one skill, globally, for the agent you name:
 
 ```bash
 npx skills add AlexHagemeister/skills --skill moot -g -a claude-code
@@ -36,6 +45,7 @@ Use `--list` to see what is available, `--skill '*'` for all of them, and `npx s
 ```
 skills/<name>/SKILL.md      the procedure, with name and description in frontmatter
 skills/<name>/...           anything the procedure references (persona files, scripts)
+.claude-plugin/             marketplace.json and plugin.json, so Claude Code can install the set as one plugin
 scripts/link.sh             author-side: symlink every skill into ~/.claude/skills
 scripts/promote.sh          author-side: move a piloted skill in and link it back
 ```

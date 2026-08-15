@@ -1,0 +1,16 @@
+{
+  "name": "alexhagemeister",
+  "owner": {
+    "name": "Alex Hagemeister"
+  },
+  "plugins": [
+    {
+      "name": "ah",
+      "source": "./",
+      "description": "Agent skills Alex Hagemeister uses every day: moot, align, yes-and, orchestrator. Installs all of them, and new ones as they land."
+    }
+  ],
+  "metadata": {
+    "description": "Agent skills by Alex Hagemeister. One plugin, ah, holds all of them."
+  }
+}
