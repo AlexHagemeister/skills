@@ -17,30 +17,75 @@ The [GNADD](https://github.com/AlexHagemeister/gnadd) suite (git-native agent-dr
 
 ## Install
 
-Pick whichever fits how you work. Every path ends the same way: a folder in your agent's skills directory.
+A skill is a folder. Installing means getting that folder to where your agent looks for skills. There are five ways to do that. Pick by what you use:
 
-**Claude Code plugin.** The repo is also a plugin marketplace. One plugin, `ah`, holds every skill here, and it picks up new ones as they land. From a shell:
+| You use | Do this | Updates |
+|---|---|---|
+| Claude Code in the desktop app, no terminal | [Plugin, from the app](#plugin-from-the-app) | one pasted sentence when you want them |
+| Claude Code, and a terminal is fine | [Plugin, from a terminal](#plugin-from-a-terminal) | automatic once you turn it on |
+| Cursor, Codex, or another agent that reads skills | [Skills CLI](#skills-cli) | one command when you want them |
+| Claude on the web or your phone, no Claude Code | [Upload to your Claude account](#upload-to-your-claude-account) | re-upload |
+| Any of the above, and you want to see the files first | [By hand](#by-hand) | re-copy |
+
+If you are not sure which agent you have: Claude Code is the one that runs in a terminal or in the Code tab of the Claude desktop app. Claude on the web (claude.ai) and the phone app are not Claude Code.
+
+### Plugin, from the app
+
+For the Claude desktop app, no terminal needed. One plugin, `ah`, holds every skill in this repo and picks up new ones as they land.
+
+1. Open the Code tab and start a session in any folder.
+2. Paste this into the prompt and send it:
+
+   ```
+   Run these two shell commands for me, then tell me when they finish:
+   claude plugin marketplace add AlexHagemeister/skills
+   claude plugin install ah@alexhagemeister
+   ```
+
+3. Start a new session. The skills answer to `/ah:moot`, `/ah:align`, `/ah:yes-and`, `/ah:orchestrator`.
+
+To see what is installed later, click the **+** button next to the prompt box and choose **Plugins**. To get the latest changes, paste `Run claude plugin update ah for me` into any session. If you also use Claude Code in a terminal, you can turn on auto-update instead (next section) and skip that step forever.
+
+### Plugin, from a terminal
+
+Same plugin, two commands. Works in any terminal where `claude` runs:
 
 ```bash
 claude plugin marketplace add AlexHagemeister/skills
 claude plugin install ah@alexhagemeister
 ```
 
-Or, inside a running Claude Code session, the same two steps as slash commands: `/plugin marketplace add AlexHagemeister/skills`, then `/plugin install ah@alexhagemeister`.
+Then, inside a terminal Claude Code session, run `/plugin`, go to **Marketplaces**, pick `alexhagemeister`, and turn on auto-update. It is off by default for every marketplace that is not Anthropic's own. With it on, anything I push arrives on your next launch. If you would rather not, `claude plugin update ah` pulls the latest whenever you like.
 
-Skills then answer to `/ah:moot`, `/ah:align`, and so on. To get updates without doing anything, open `/plugin`, go to Marketplaces, pick `alexhagemeister`, and turn on auto-update. It is off by default for every marketplace that is not Anthropic's own. In the desktop app the same controls live in the plugin browser.
+If you are already inside a terminal session, the same two install steps work as slash commands: `/plugin marketplace add AlexHagemeister/skills`, then `/plugin install ah@alexhagemeister`.
 
-**With the skills CLI** (needs Node for `npx`). Works with any agent the CLI supports. Installs one skill, globally, for the agent you name:
+### Skills CLI
+
+For any agent the [skills CLI](https://github.com/vercel-labs/skills) supports, including Cursor, Codex, Gemini CLI, and Claude Code. Needs [Node.js](https://nodejs.org/) so `npx` works. Installs one skill for one agent, globally:
 
 ```bash
 npx skills add AlexHagemeister/skills --skill moot -g -a claude-code
 ```
 
-Use `--list` to see what is available, `--skill '*'` for all of them, and `npx skills update -g` to pull changes later. Agent names and flags are in the [skills CLI docs](https://github.com/vercel-labs/skills).
+Swap `moot` for the skill you want, or `'*'` for all of them. Swap `claude-code` for your agent's name (`cursor`, `codex`, and so on). Add `--list` to see what is available. Later, `npx skills update -g` pulls whatever changed. Skills installed this way answer to their plain names: `/moot`, `/align`.
 
-**By hand.** Download or clone, then copy the skill folder into your agent's skills directory (`~/.claude/skills/` for Claude Code, `~/.agents/skills/` for most others). Restart the session and the skill is live.
+### Upload to your Claude account
 
-**Point your agent at it.** Give the agent the URL of a `SKILL.md` and ask it to install the skill. It reads the file and knows where the folder goes.
+For Claude on the web or the phone app. Account skills are zip files you upload once, and they follow you to every device.
+
+1. On this page, click the green **Code** button, then **Download ZIP**. Unzip it.
+2. Inside, open the `skills` folder and find the skill you want (for example `align`). Compress that one folder into its own zip.
+3. In Claude, go to Settings, then Capabilities, then Skills, and upload the zip.
+
+To get changes later, repeat the three steps. This path does not update itself.
+
+One limit: `moot` and `orchestrator` work by launching subagents, which chat on the web and phone cannot do. Upload `align` and `yes-and` there. Use the other two in Claude Code.
+
+### By hand
+
+Download the ZIP as above, or clone the repo. Copy the skill folder you want into your agent's skills directory: `~/.claude/skills/` for Claude Code, `~/.agents/skills/` for most others. Start a new session and the skill is live. To update, copy it again.
+
+You can also skip all of this and hand the job to your agent: give it the link to a skill's `SKILL.md` and ask it to install the skill. It reads the file and knows where the folder goes.
 
 ## Layout
 
