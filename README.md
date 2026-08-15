@@ -19,12 +19,14 @@ The [GNADD](https://github.com/AlexHagemeister/gnadd) suite (git-native agent-dr
 
 Pick whichever fits how you work. Every path ends the same way: a folder in your agent's skills directory.
 
-**Claude Code plugin.** The repo is also a plugin marketplace. One plugin, `ah`, holds every skill here, and it picks up new ones as they land. Inside Claude Code:
+**Claude Code plugin.** The repo is also a plugin marketplace. One plugin, `ah`, holds every skill here, and it picks up new ones as they land. From a shell:
 
+```bash
+claude plugin marketplace add AlexHagemeister/skills
+claude plugin install ah@alexhagemeister
 ```
-/plugin marketplace add AlexHagemeister/skills
-/plugin install ah@alexhagemeister
-```
+
+Or, inside a running Claude Code session, the same two steps as slash commands: `/plugin marketplace add AlexHagemeister/skills`, then `/plugin install ah@alexhagemeister`.
 
 Skills then answer to `/ah:moot`, `/ah:align`, and so on. To get updates without doing anything, open `/plugin`, go to Marketplaces, pick `alexhagemeister`, and turn on auto-update. It is off by default for every marketplace that is not Anthropic's own. In the desktop app the same controls live in the plugin browser.
 
