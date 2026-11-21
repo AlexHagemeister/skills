@@ -1,2 +1,13 @@
 .DS_Store
 __pycache__/
+
+# Per-user tuning notes. Each skill's TUNING.md is the user's own run log,
+# kept on their machine and never published. On the author's machine it links
+# into a private, separately versioned store.
+TUNING.md
+# Free-seat persona drafts written by moot on each run. Local only; a draft
+# that recurs is promoted into personas/ and committed there.
+skills/moot/personas/drafts/
+# Author-side nightly push: the private scan list and the hold note it leaves.
+.publish-patterns
+.nightly-push-hold

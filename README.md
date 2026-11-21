@@ -2,16 +2,16 @@
 
 Agent skills I use every day and have run long enough to trust. Each one is a folder with a `SKILL.md`: a short procedure an agent loads when the task matches. They work with any agent that reads the [Agent Skills](https://agentskills.io) format (Claude Code, Codex, Cursor, and others).
 
-Skills land here after a pilot period in my own setup. What is here is what I actually reach for.
+Skills land here after a pilot period in my own setup. What is here is what I actually reach for. They keep changing as I use them: edits go out every night, so an update can change how a skill behaves.
 
 ## Skills
 
 | Skill | What it does | Invoke |
 |---|---|---|
-| [`moot`](skills/moot/) | Convenes four subagents with distinct dispositions (Empiricist, Pathologist, Field Medic, Prodigy) to investigate the same problem independently. You get their verdicts side by side and the disagreement between them, never a blend. | `/moot <problem>` |
+| [`moot`](skills/moot/) | Builds a team of subagents for one question (a problem, a decision, a design to review, a research question). Each seat owns a question no other seat owns, investigates alone, and argues once if the team splits. You get one plain recommendation, the disagreements that need your call, and how the team compared with the answer the agent sealed before casting. | `/moot <question>` |
 | [`align`](skills/align/) | Pins down what you are actually asking before any work starts. The agent echoes its model of the ask in its own words, names contradictions and gaps, and iterates until you both confirm. Then it stops and waits. | `/align` |
 | [`yes-and`](skills/yes-and/) | Ideation register. Suspends the default caveats and pushback, builds on the idea, and keeps about three distinct forms of it alive. Drops the mode the moment you ask for rigor. | say "brainstorm", "riff", "what if we" |
-| [`orchestrator`](skills/orchestrator/) | Session directive. The main loop delegates every task to subagents and executes nothing itself. Self-contained briefs, one file per lane, verify by evidence. Stays on until you turn it off. | `/orchestrator` |
+| [`orchestrator`](skills/orchestrator/) | Session directive. The main loop delegates the big work (builds, reviews, research) to subagents and does only small tasks itself. Self-contained briefs, one file per lane, lanes sized to the risk, verify by evidence. Stays on until you turn it off. | `/orchestrator` |
 
 The [GNADD](https://github.com/AlexHagemeister/gnadd) suite (git-native agent-driven development, nine skills plus a script) lives in its own repo. It has tests and versioned releases and did not fit a folder-per-skill layout.
 
@@ -92,12 +92,14 @@ You can also skip all of this and hand the job to your agent: give it the link t
 ```
 skills/<name>/SKILL.md      the procedure, with name and description in frontmatter
 skills/<name>/...           anything the procedure references (persona files, scripts)
+skills/<name>/TUNING.md     your own run log for that skill, written as you use it; git-ignored, never shipped
 .claude-plugin/             marketplace.json and plugin.json, so Claude Code can install the set as one plugin
 scripts/link.sh             author-side: symlink every skill into ~/.claude/skills
 scripts/promote.sh          author-side: move a piloted skill in and link it back
+scripts/nightly-push.sh     author-side: check, scan, commit, and push each night
 ```
 
-The scripts are how I work on these. My live skills directory holds symlinks into this repo, so an edit made mid-session is an edit to the repo. A skill I am still piloting lives as a plain folder there. When it earns its place, `promote.sh` moves it in.
+The scripts are how I work on these. My live skills directory holds symlinks into this repo, so an edit made mid-session is an edit to the repo. A skill I am still piloting lives as a plain folder there. When it earns its place, `promote.sh` moves it in. Each night `nightly-push.sh` checks the skills, scans the changes for anything private, and commits and pushes them, or holds the push and tells me what it found.
 
 ## License
 
